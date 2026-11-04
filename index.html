@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>여행 회화 한마디</title>
+<meta name="description" content="영어·일본어·중국어·이탈리아어·프랑스어 여행 회화 115문장, 발음 듣기와 퀴즈">
+<meta name="theme-color" content="#0f6b5c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="여행회화">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  /* 레이아웃: 위에 검색창과 상황 칩 고정, 가운데 문장 카드 목록, 아래 탭 3개 */
+  :root{
+    --bg:#f3f6f5; --surface:#ffffff; --fg:#14231f; --muted:#5b6a66; --line:#d9e1de;
+    --accent:#0f6b5c; --accent-soft:#dcefea; --on-accent:#ffffff;
+    --sun:#f3c56b; --sun-soft:#fdf1d8; --ok:#1f8a55; --ok-soft:#e0f3e8; --err:#c0442d; --err-soft:#fbe5e0;
+    --en:"Fraunces",Georgia,"Times New Roman",serif;
+    --ko:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    --tabbar:62px;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#0e1513; --surface:#16211e; --fg:#e3ece9; --muted:#93a49f; --line:#25332f;
+    --accent:#4cc0a7; --accent-soft:#163029; --on-accent:#08201b;
+    --sun:#e0a94a; --sun-soft:#33291a; --ok:#4fc489; --ok-soft:#153024; --err:#ff7d66; --err-soft:#3a1f1a; color-scheme:dark } }
+  :root[data-theme="dark"]{
+    --bg:#0e1513; --surface:#16211e; --fg:#e3ece9; --muted:#93a49f; --line:#25332f;
+    --accent:#4cc0a7; --accent-soft:#163029; --on-accent:#08201b;
+    --sun:#e0a94a; --sun-soft:#33291a; --ok:#4fc489; --ok-soft:#153024; --err:#ff7d66; --err-soft:#3a1f1a; color-scheme:dark }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--ko);-webkit-tap-highlight-color:transparent}
+  button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+  button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  mark{background:var(--sun-soft);color:inherit;border-radius:3px;box-shadow:inset 0 -2px 0 var(--sun)}
+
+  .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;flex-direction:column;gap:10px;
+       padding-block:12px 10px;padding-inline:16px;border-bottom:1px solid var(--line)}
+  .trow{display:flex;align-items:center;gap:10px}
+  .trow h1{margin:0;font-size:18px;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .trow h1 span{font-family:var(--en);color:var(--accent);font-weight:600}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .lang{position:relative;flex:none;display:block}
+  .lang select{-webkit-appearance:none;appearance:none;height:34px;border-radius:999px;border:1.5px solid var(--accent);background:var(--accent-soft);
+               color:var(--fg);font:700 13.5px var(--ko);padding:0 30px 0 12px;max-width:150px}
+  .lang svg{position:absolute;right:10px;top:50%;width:14px;height:14px;transform:translateY(-50%);pointer-events:none;color:var(--accent)}
+  .card .rom{font-size:13px;color:var(--muted);font-style:italic}
+  .speed{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface);flex:none}
+  .speed button{border:0;background:none;padding:5px 10px;font-size:12px;color:var(--muted)}
+  .speed button.on{background:var(--accent);color:var(--on-accent);font-weight:700}
+  .search{position:relative}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
+  .search input{width:100%;height:46px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--fg);
+                font:16px var(--ko);padding:0 42px 0 40px;-webkit-appearance:none;appearance:none}
+  .search input:focus{border-color:var(--accent);outline:none}
+  .search .clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;border-radius:50%;background:var(--line);font-size:14px}
+  .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}
+  .chips::-webkit-scrollbar{display:none}
+  .chips button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13.5px;white-space:nowrap}
+  .chips button.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:700}
+  .chips button small{color:var(--muted);margin-left:3px;font-variant-numeric:tabular-nums}
+  .chips button.on small{color:inherit;opacity:.7}
+
+  main{max-width:640px;margin:0 auto;padding-block:14px calc(var(--tabbar) + 24px + env(safe-area-inset-bottom,0px));padding-inline:16px;
+       display:flex;flex-direction:column;gap:10px}
+  .count{font-size:13px;color:var(--muted);margin:0}
+  .sec{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em;margin:8px 0 0}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 12px 12px 16px;display:flex;gap:10px;align-items:flex-start}
+  .card .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .card .en{font:600 19px/1.3 var(--en);letter-spacing:-.005em;overflow-wrap:anywhere}
+  .card .pr{font-size:13px;color:var(--accent)}
+  .card .ko{font-size:14.5px}
+  .card .tip{font-size:12.5px;color:var(--muted);margin-top:4px;padding-left:8px;border-left:2px solid var(--sun)}
+  .card .cat{font-size:11px;color:var(--muted);margin-top:4px}
+  .acts{display:flex;flex-direction:column;gap:6px;flex:none}
+  .ib{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center}
+  .ib svg{width:20px;height:20px}
+  .ib.play{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  .ib.play.speaking{box-shadow:0 0 0 4px var(--accent-soft)}
+  .ib.fav.on{color:var(--sun);border-color:var(--sun);background:var(--sun-soft)}
+  .ib.fav.on svg{fill:currentColor}
+
+  .empty{text-align:center;color:var(--muted);padding:28px 8px;display:flex;flex-direction:column;gap:10px;align-items:center}
+  .empty b{color:var(--fg);font-size:16px}
+  .sugs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+  .sugs button{border:1px dashed var(--accent);background:var(--accent-soft);color:var(--fg);border-radius:999px;padding:5px 12px;font-size:13px}
+
+  /* 퀴즈 */
+  .qbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 16px;display:flex;flex-direction:column;gap:14px}
+  .qmeta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .qmeta b{color:var(--fg)}
+  .qk{font-size:22px;font-weight:700;line-height:1.35;text-wrap:balance}
+  .qhint{font-size:13px;color:var(--muted)}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opts button{text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font:600 16.5px/1.35 var(--en)}
+  .opts button.right{border-color:var(--ok);background:var(--ok-soft)}
+  .opts button.wrong{border-color:var(--err);background:var(--err-soft)}
+  .opts button:disabled{cursor:default}
+  .qfoot{display:flex;gap:8px}
+  .btn{flex:1;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:700}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  .qscope{display:flex;gap:6px;flex-wrap:wrap}
+  .qscope button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:13px}
+  .qscope button.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:700}
+
+  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+        display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .tabs button{border:0;background:none;height:var(--tabbar);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:600;color:var(--muted)}
+  .tabs svg{width:22px;height:22px}
+  .tabs button.on{color:var(--accent)}
+  .toast{position:fixed;left:50%;bottom:calc(var(--tabbar) + 16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);
+         padding:8px 14px;border-radius:999px;font-size:13px;z-index:9;max-width:90%;text-align:center}
+  /* 설치 안내 바: 설치할 수 있을 때만 검색창 위에 나타남 */
+  .inst{display:flex;align-items:center;gap:8px;background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:8px 8px 8px 12px;font-size:13.5px;line-height:1.4}
+  .inst .msg{flex:1;min-width:0}
+  .inst .go{flex:none;border:0;background:var(--accent);color:var(--on-accent);border-radius:999px;padding:7px 14px;font-weight:700;font-size:13.5px;text-decoration:none}
+  .inst .x{flex:none;width:30px;height:30px;border:0;border-radius:50%;background:none;color:var(--muted);font-size:15px}
+  /* 폴드 접은 화면처럼 좁은 폭: 제목이 잘리지 않게 언어·속도 버튼을 줄인다 */
+  @media (max-width:380px){
+    .trow{gap:6px}
+    .trow h1{font-size:16px}
+    .lang select{max-width:118px;padding:0 24px 0 10px;font-size:12.5px}
+    .lang svg{right:8px}
+    .speed button{padding:5px 7px}
+  }
+  @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="trow">
+    <h1>여행 회화</h1>
+    <label class="lang"><span class="sr">언어 선택</span>
+      <select id="lang" aria-label="언어 선택">
+        <option value="en">영어 English</option>
+        <option value="ja">일본어 日本語</option>
+        <option value="zh">중국어 中文</option>
+        <option value="it">이탈리아어 Italiano</option>
+        <option value="fr">프랑스어 Français</option>
+      </select>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg>
+    </label>
+    <div class="speed" role="group" aria-label="읽기 속도">
+      <button data-rate="0.9" class="on">보통</button><button data-rate="0.6">천천히</button>
+    </div>
+  </div>
+  <div class="inst" id="inst" hidden><span class="msg" id="instMsg"></span><button class="go" id="instGo">설치</button><button class="x" id="instX" aria-label="닫기">✕</button></div>
+  <div class="search" id="searchWrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="한국어나 영어로 검색 (예: 화장실, check in)" autocomplete="off" enterkeyhint="search">
+    <button class="clear" id="clearQ" aria-label="검색어 지우기" hidden>✕</button>
+  </div>
+  <div class="chips" id="chips"></div>
+</header>
+
+<main id="view">
+  <!-- 스크립트가 실행되면 이 안내는 문장 목록으로 바뀜. 카톡·파일 미리보기처럼 스크립트가 꺼진 화면에서만 보임 -->
+  <div class="empty"><b>이 화면에서는 앱이 작동하지 않아요</b>
+    <span>파일 미리보기 화면에서는 앱 기능이 꺼져 있어요. 아래 주소를 Chrome이나 Safari에서 열어 주세요.<br><b>sinaboro.github.io/multi-language-talk</b></span></div>
+</main>
+
+<nav class="tabs">
+  <button data-tab="list" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg>표현</button>
+  <button data-tab="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>즐겨찾기</button>
+  <button data-tab="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg>퀴즈</button>
+</nav>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const CATS = [
+  ['basic','기본 표현'],['airport','공항·입국'],['plane','기내'],['hotel','호텔'],['food','식당·카페'],
+  ['shop','쇼핑'],['move','교통'],['way','길 묻기'],['tour','관광'],['help','긴급 상황'],
+];
+// 상황 | 영어 | 한글 발음 | 뜻 | 도움말
+const RAW = `
+basic|Hello.|헬로우|안녕하세요.|
+basic|Excuse me.|익스큐즈 미|실례합니다.|사람을 부를 때, 지나갈 때 모두 써요.
+basic|Thank you so much.|땡큐 쏘 머치|정말 감사합니다.|
+basic|You're welcome.|유어 웰컴|천만에요.|
+basic|I'm sorry.|아임 쏘리|죄송합니다.|
+basic|Sorry, I don't understand.|쏘리, 아이 돈트 언더스탠드|죄송해요, 이해를 못 했어요.|
+basic|Could you say that again, please?|쿠쥬 세이 댓 어겐, 플리즈?|다시 한 번 말씀해 주시겠어요?|짧게 Pardon?(파든?)이라고 해도 돼요.
+basic|Could you speak more slowly?|쿠쥬 스픽 모어 슬로울리?|조금 천천히 말씀해 주시겠어요?|
+basic|Do you speak Korean?|두 유 스픽 코리안?|한국어 하세요?|
+basic|I'm from Korea.|아임 프롬 코리아|한국에서 왔어요.|
+basic|Yes, please. / No, thank you.|예스, 플리즈 / 노, 땡큐|네, 부탁해요. / 아니요, 괜찮아요.|권유를 받았을 때 대답이에요.
+basic|Can you help me?|캔 유 헬프 미?|좀 도와주시겠어요?|
+basic|How much is it?|하우 머치 이즈 잇?|얼마예요?|
+basic|Where is the restroom?|웨어 이즈 더 레스트룸?|화장실이 어디예요?|영국·유럽에서는 toilet(토일렛)도 많이 써요.
+basic|Can you write it down?|캔 유 라잇 잇 다운?|적어 주시겠어요?|숫자나 주소를 잘못 들었을 때 유용해요.
+airport|Here is my passport.|히어 이즈 마이 패스포트|여기 제 여권이요.|
+airport|I'm here for sightseeing.|아임 히어 포 싸잇씽|관광하러 왔어요.|입국 심사 질문 What's the purpose of your visit?(방문 목적이 뭐예요?)의 대답이에요.
+airport|I'm staying for five days.|아임 스테잉 포 파이브 데이즈|5일 동안 머물 거예요.|How long are you staying?(얼마나 머물러요?)의 대답이에요.
+airport|I'm staying at the Hilton Hotel.|아임 스테잉 앳 더 힐튼 호텔|힐튼 호텔에 묵어요.|Where are you staying?(어디서 묵어요?)의 대답이에요.
+airport|I'd like a window seat, please.|아이드 라잌 어 윈도우 씻, 플리즈|창가 자리로 주세요.|복도 자리는 aisle seat(아일 씻)이에요.
+airport|I have one bag to check.|아이 해브 원 백 투 첵|부칠 가방이 하나 있어요.|
+airport|Where is gate 23?|웨어 이즈 게잇 트웬티쓰리?|23번 게이트가 어디예요?|
+airport|Is this flight on time?|이즈 디스 플라잇 온 타임?|이 비행기 제시간에 출발하나요?|지연은 delayed(딜레이드), 결항은 canceled(캔슬드)예요.
+airport|Where can I pick up my baggage?|웨어 캔 아이 픽 업 마이 배기지?|짐은 어디서 찾나요?|
+airport|My baggage didn't arrive.|마이 배기지 디든트 어라이브|제 짐이 안 나왔어요.|수하물표(baggage claim tag)를 꼭 보여 주세요.
+airport|Where can I exchange money?|웨어 캔 아이 익스체인지 머니?|환전은 어디서 하나요?|
+airport|I have nothing to declare.|아이 해브 낫띵 투 디클레어|신고할 물건 없어요.|세관 신고 때 써요.
+airport|I'm connecting to Paris.|아임 커넥팅 투 패리스|파리로 환승해요.|환승은 transfer(트랜스퍼)라고도 해요.
+plane|Could I have some water, please?|쿠드 아이 해브 썸 워러, 플리즈?|물 좀 주시겠어요?|
+plane|Chicken, please.|치킨, 플리즈|치킨으로 주세요.|기내식 Chicken or beef?(치킨이요, 소고기요?)에 이렇게 답해요.
+plane|Can I have a blanket?|캔 아이 해브 어 블랭킷?|담요 하나 주시겠어요?|
+plane|Excuse me, can I get through?|익스큐즈 미, 캔 아이 겟 쓰루?|실례지만 좀 지나갈게요.|
+plane|Can I recline my seat?|캔 아이 리클라인 마이 씻?|좌석 좀 젖혀도 될까요?|뒷사람에게 묻는 말이에요.
+plane|I think this is my seat.|아이 띵크 디스 이즈 마이 씻|여기 제 자리 같아요.|탑승권을 같이 보여 주면 좋아요.
+plane|Could you help me with my bag?|쿠쥬 헬프 미 위드 마이 백?|가방 올리는 것 좀 도와주시겠어요?|
+plane|I feel sick.|아이 필 씩|속이 안 좋아요.|
+hotel|I'd like to check in, please.|아이드 라잌 투 첵 인, 플리즈|체크인하고 싶어요.|
+hotel|I have a reservation under Kim.|아이 해브 어 레저베이션 언더 킴|김으로 예약했어요.|under 뒤에 예약자 성을 말해요.
+hotel|What time is checkout?|왓 타임 이즈 첵아웃?|체크아웃은 몇 시예요?|
+hotel|Is breakfast included?|이즈 브렉퍼스트 인클루디드?|조식 포함인가요?|
+hotel|What's the Wi-Fi password?|왓츠 더 와이파이 패스워드?|와이파이 비밀번호가 뭐예요?|
+hotel|Could you hold my luggage?|쿠쥬 홀드 마이 러기지?|짐 좀 맡아 주시겠어요?|체크아웃한 뒤에 짐을 맡길 때 써요. keep보다 hold가 자연스러워요.
+hotel|The air conditioner doesn't work.|디 에어 컨디셔너 더즌트 워크|에어컨이 안 돼요.|
+hotel|There's no hot water.|데어즈 노 핫 워러|뜨거운 물이 안 나와요.|
+hotel|I locked myself out.|아이 락트 마이셀프 아웃|키를 두고 나와서 문이 잠겼어요.|
+hotel|Could I have extra towels?|쿠드 아이 해브 엑스트라 타월즈?|수건 좀 더 주시겠어요?|
+hotel|Can I check out late?|캔 아이 첵 아웃 레잇?|늦게 체크아웃해도 될까요?|
+hotel|Could you call a taxi for me?|쿠쥬 콜 어 택시 포 미?|택시 좀 불러 주시겠어요?|
+food|A table for two, please.|어 테이블 포 투, 플리즈|두 명 자리 부탁해요.|
+food|Can I see the menu?|캔 아이 씨 더 메뉴?|메뉴 좀 볼 수 있을까요?|
+food|What do you recommend?|왓 두 유 레커멘드?|추천해 주실 메뉴 있어요?|
+food|I'll have this, please.|아일 해브 디스, 플리즈|이걸로 할게요.|메뉴를 손가락으로 가리키면서 말하면 확실해요.
+food|I'm allergic to peanuts.|아임 얼러직 투 피넛츠|땅콩 알레르기가 있어요.|새우는 shrimp(쉬림프), 우유는 milk(밀크)예요.
+food|No ice, please.|노 아이스, 플리즈|얼음 빼 주세요.|
+food|Not too spicy, please.|낫 투 스파이시, 플리즈|너무 맵지 않게 해 주세요.|
+food|Can I get this to go?|캔 아이 겟 디스 투 고?|포장해 주세요.|영국에서는 take away(테잌 어웨이)라고 해요.
+food|For here, please.|포 히어, 플리즈|여기서 먹을게요.|
+food|Check, please.|첵, 플리즈|계산서 주세요.|영국에서는 The bill, please.(더 빌, 플리즈)라고 해요.
+food|Can we pay separately?|캔 위 페이 세퍼럿리?|따로 계산해도 될까요?|
+food|Is service included?|이즈 써비스 인클루디드?|봉사료 포함인가요?|미국은 팁 15~20%가 보통이에요.
+food|An iced Americano, please.|언 아이스드 아메리카노, 플리즈|아이스 아메리카노 하나 주세요.|
+food|This isn't what I ordered.|디스 이즌트 왓 아이 오더드|이건 제가 주문한 게 아니에요.|
+food|Could I have some more water?|쿠드 아이 해브 썸 모어 워러?|물 좀 더 주시겠어요?|
+shop|I'm just looking.|아임 저스트 루킹|그냥 둘러보는 중이에요.|점원이 Can I help you?라고 물을 때 대답이에요.
+shop|Can I try this on?|캔 아이 트라이 디스 온?|입어 봐도 될까요?|
+shop|Do you have this in a bigger size?|두 유 해브 디스 인 어 비거 사이즈?|이거 더 큰 사이즈 있어요?|작은 사이즈는 smaller size(스몰러 사이즈)예요.
+shop|Do you have it in black?|두 유 해브 잇 인 블랙?|검은색 있어요?|
+shop|Can I get a discount?|캔 아이 겟 어 디스카운트?|좀 깎아 주실 수 있어요?|
+shop|I'll take it.|아일 테잌 잇|이걸로 살게요.|
+shop|Can I pay by card?|캔 아이 페이 바이 카드?|카드로 계산해도 돼요?|현금은 cash(캐쉬)예요.
+shop|Can I get a tax refund?|캔 아이 겟 어 택스 리펀드?|택스 리펀드 되나요?|여권을 꼭 챙기세요.
+shop|Could you gift wrap it?|쿠쥬 기프트 랩 잇?|선물 포장해 주시겠어요?|
+shop|I'd like to return this.|아이드 라잌 투 리턴 디스|이거 반품하고 싶어요.|영수증은 receipt(리씻)이에요.
+shop|Where is the fitting room?|웨어 이즈 더 피팅 룸?|탈의실이 어디예요?|
+move|Where can I buy a ticket?|웨어 캔 아이 바이 어 티킷?|표는 어디서 사요?|
+move|One ticket to downtown, please.|원 티킷 투 다운타운, 플리즈|시내까지 표 한 장 주세요.|왕복은 round trip(라운드 트립), 편도는 one way(원 웨이)예요.
+move|Does this bus go to the airport?|더즈 디스 버스 고 투 디 에어포트?|이 버스 공항 가나요?|
+move|Which line goes to Central Station?|위치 라인 고즈 투 센트럴 스테이션?|중앙역 가는 건 몇 호선이에요?|
+move|Where should I get off?|웨어 슈드 아이 겟 오프?|어디서 내려야 해요?|
+move|Please tell me when we get there.|플리즈 텔 미 웬 위 겟 데어|도착하면 알려 주세요.|
+move|To this address, please.|투 디스 어드레스, 플리즈|이 주소로 가 주세요.|택시에서 휴대폰 지도나 주소를 보여 주면서 말해요.
+move|How long does it take?|하우 롱 더즈 잇 테잌?|얼마나 걸려요?|
+move|Please stop here.|플리즈 스탑 히어|여기서 세워 주세요.|
+move|How much is the fare?|하우 머치 이즈 더 페어?|요금이 얼마예요?|
+move|Is this seat taken?|이즈 디스 씻 테이큰?|이 자리 주인 있어요?|
+move|I missed my train.|아이 미스트 마이 트레인|기차를 놓쳤어요.|
+way|How do I get to the museum?|하우 두 아이 겟 투 더 뮤지엄?|박물관에 어떻게 가요?|the 뒤에 가고 싶은 곳을 넣어요.
+way|Is it far from here?|이즈 잇 파 프롬 히어?|여기서 멀어요?|
+way|Can I walk there?|캔 아이 웍 데어?|걸어갈 수 있어요?|
+way|I'm lost.|아임 로스트|길을 잃었어요.|
+way|Where are we on this map?|웨어 아 위 온 디스 맵?|이 지도에서 여기가 어디예요?|
+way|Is there a subway station nearby?|이즈 데어 어 썹웨이 스테이션 니어바이?|근처에 지하철역 있어요?|영국은 underground(언더그라운드), 유럽은 metro(메트로)라고도 해요.
+way|Turn left. / Turn right. / Go straight.|턴 레프트 / 턴 라잇 / 고 스트레잇|왼쪽으로 / 오른쪽으로 / 직진하세요.|길 안내에서 가장 많이 듣는 말이에요.
+way|It's on the corner.|잇츠 온 더 코너|모퉁이에 있어요.|
+way|Could you show me on the map?|쿠쥬 쇼 미 온 더 맵?|지도에서 보여 주시겠어요?|
+tour|How much is the admission fee?|하우 머치 이즈 디 어드미션 피?|입장료가 얼마예요?|
+tour|Two adults, please.|투 어덜츠, 플리즈|어른 두 장 주세요.|어린이는 child(차일드), 학생은 student(스튜던트)예요.
+tour|What time does it close?|왓 타임 더즈 잇 클로즈?|몇 시에 문 닫아요?|여는 시간은 open(오픈)이에요.
+tour|Can I take pictures here?|캔 아이 테잌 픽쳐스 히어?|여기서 사진 찍어도 돼요?|
+tour|Could you take a picture of us?|쿠쥬 테잌 어 픽쳐 오브 어스?|저희 사진 좀 찍어 주시겠어요?|
+tour|Is there a guided tour?|이즈 데어 어 가이디드 투어?|가이드 투어 있어요?|
+tour|Do you have a map in Korean?|두 유 해브 어 맵 인 코리안?|한국어 지도 있어요?|
+tour|Where is the entrance?|웨어 이즈 디 엔트런스?|입구가 어디예요?|출구는 exit(엑싯)이에요.
+help|Help!|헬프!|도와주세요!|
+help|Please call the police.|플리즈 콜 더 폴리스|경찰 불러 주세요.|
+help|Please call an ambulance.|플리즈 콜 언 앰뷸런스|구급차 불러 주세요.|
+help|I lost my passport.|아이 로스트 마이 패스포트|여권을 잃어버렸어요.|가까운 한국 대사관이나 영사관에 연락하세요.
+help|My wallet was stolen.|마이 월릿 워즈 스톨른|지갑을 도난당했어요.|
+help|I need a doctor.|아이 니드 어 닥터|의사가 필요해요.|
+help|Where is the nearest hospital?|웨어 이즈 더 니어리스트 하스피털?|가장 가까운 병원이 어디예요?|
+help|Where is a pharmacy?|웨어 이즈 어 파머시?|약국이 어디예요?|미국은 drugstore(드럭스토어)라고도 해요.
+help|I have a headache.|아이 해브 어 헤데잌|머리가 아파요.|배가 아프면 stomachache(스터멐에잌)예요.
+help|I have a fever.|아이 해브 어 피버|열이 나요.|
+help|Where is the Korean embassy?|웨어 이즈 더 코리안 엠버시?|한국 대사관이 어디예요?|
+help|I need a police report.|아이 니드 어 폴리스 리포트|경찰 신고 확인서가 필요해요.|도난·분실 후 여행자 보험을 청구할 때 꼭 받아 두세요.`;
+
+// 영어와 같은 순서(115줄)로 된 다른 언어: 문장|한글 발음 (중국어는 |병음 추가)
+const LANG_RAW = {
+ja:`こんにちは。|곤니치와
+すみません。|스미마센
+本当にありがとうございます。|혼토니 아리가토 고자이마스
+どういたしまして。|도이타시마시테
+ごめんなさい。|고멘나사이
+すみません、よくわかりません。|스미마센, 요쿠 와카리마센
+もう一度言っていただけますか？|모 이치도 잇테 이타다케마스카?
+もう少しゆっくり話していただけますか？|모 스코시 육쿠리 하나시테 이타다케마스카?
+韓国語を話せますか？|칸코쿠고오 하나세마스카?
+韓国から来ました。|칸코쿠카라 키마시타
+はい、お願いします。/ いいえ、結構です。|하이, 오네가이시마스 / 이이에, 켁코데스
+手伝っていただけますか？|테츠닷테 이타다케마스카?
+いくらですか？|이쿠라데스카?
+トイレはどこですか？|토이레와 도코데스카?
+書いていただけますか？|카이테 이타다케마스카?
+パスポートです。|파스포토데스
+観光です。|칸코데스
+5日間滞在します。|이츠카캉 타이자이시마스
+ヒルトンホテルに泊まります。|히루톤 호테루니 토마리마스
+窓側の席をお願いします。|마도가와노 세키오 오네가이시마스
+預ける荷物は一つです。|아즈케루 니모츠와 히토츠데스
+23番ゲートはどこですか？|니주산방 게토와 도코데스카?
+この便は定刻通りですか？|코노 빈와 테이코쿠도리데스카?
+荷物はどこで受け取れますか？|니모츠와 도코데 우케토레마스카?
+荷物が出てきません。|니모츠가 데테 키마센
+両替はどこでできますか？|료가에와 도코데 데키마스카?
+申告するものはありません。|신코쿠스루 모노와 아리마센
+パリへの乗り継ぎです。|파리에노 노리츠기데스
+お水をいただけますか？|오미즈오 이타다케마스카?
+チキンでお願いします。|치킨데 오네가이시마스
+毛布をいただけますか？|모후오 이타다케마스카?
+すみません、通してください。|스미마센, 토시테 쿠다사이
+席を倒してもいいですか？|세키오 타오시테모 이이데스카?
+ここは私の席だと思います。|코코와 와타시노 세키다토 오모이마스
+荷物を上げるのを手伝っていただけますか？|니모츠오 아게루노오 테츠닷테 이타다케마스카?
+気分が悪いです。|키분가 와루이데스
+チェックインをお願いします。|첵쿠인오 오네가이시마스
+キムで予約しています。|키무데 요야쿠시테 이마스
+チェックアウトは何時ですか？|첵쿠아우토와 난지데스카?
+朝食は付いていますか？|초쇼쿠와 츠이테 이마스카?
+Wi-Fiのパスワードは何ですか？|와이파이노 파스와도와 난데스카?
+荷物を預かっていただけますか？|니모츠오 아즈캇테 이타다케마스카?
+エアコンがつきません。|에아콘가 츠키마센
+お湯が出ません。|오유가 데마센
+鍵を部屋に置いたまま閉めてしまいました。|카기오 헤야니 오이타마마 시메테 시마이마시타
+タオルをもう少しいただけますか？|타오루오 모 스코시 이타다케마스카?
+レイトチェックアウトはできますか？|레이토 첵쿠아우토와 데키마스카?
+タクシーを呼んでいただけますか？|타쿠시오 욘데 이타다케마스카?
+二人です。|후타리데스
+メニューを見せてください。|메뉴오 미세테 쿠다사이
+おすすめは何ですか？|오스스메와 난데스카?
+これをお願いします。|코레오 오네가이시마스
+ピーナッツアレルギーがあります。|피낫츠 아레루기가 아리마스
+氷なしでお願いします。|코리 나시데 오네가이시마스
+あまり辛くしないでください。|아마리 카라쿠 시나이데 쿠다사이
+持ち帰りでお願いします。|모치카에리데 오네가이시마스
+店内で食べます。|텐나이데 타베마스
+お会計をお願いします。|오카이케오 오네가이시마스
+別々に払えますか？|베츠베츠니 하라에마스카?
+サービス料は含まれていますか？|사비스료와 후쿠마레테 이마스카?
+アイスアメリカーノを一つください。|아이스 아메리카노오 히토츠 쿠다사이
+これは注文したものと違います。|코레와 추몬시타 모노토 치가이마스
+お水をもう少しいただけますか？|오미즈오 모 스코시 이타다케마스카?
+見ているだけです。|미테이루 다케데스
+試着してもいいですか？|시차쿠시테모 이이데스카?
+もっと大きいサイズはありますか？|못토 오키이 사이즈와 아리마스카?
+黒はありますか？|쿠로와 아리마스카?
+少し安くなりませんか？|스코시 야스쿠 나리마센카?
+これにします。|코레니 시마스
+カードで払えますか？|카도데 하라에마스카?
+免税できますか？|멘제이 데키마스카?
+プレゼント用に包んでいただけますか？|푸레젠토요니 츠츤데 이타다케마스카?
+これを返品したいです。|코레오 헨핀시타이데스
+試着室はどこですか？|시차쿠시츠와 도코데스카?
+切符はどこで買えますか？|킵푸와 도코데 카에마스카?
+市内まで一枚お願いします。|시나이마데 이치마이 오네가이시마스
+このバスは空港に行きますか？|코노 바스와 쿠코니 이키마스카?
+中央駅へは何線に乗ればいいですか？|추오에키에와 나니센니 노레바 이이데스카?
+どこで降りればいいですか？|도코데 오리레바 이이데스카?
+着いたら教えてください。|츠이타라 오시에테 쿠다사이
+この住所までお願いします。|코노 쥬쇼마데 오네가이시마스
+どのくらいかかりますか？|도노쿠라이 카카리마스카?
+ここで止めてください。|코코데 토메테 쿠다사이
+運賃はいくらですか？|운친와 이쿠라데스카?
+この席は空いていますか？|코노 세키와 아이테 이마스카?
+電車に乗り遅れました。|덴샤니 노리오쿠레마시타
+博物館へはどうやって行けばいいですか？|하쿠부츠칸에와 도얏테 이케바 이이데스카?
+ここから遠いですか？|코코카라 토이데스카?
+歩いて行けますか？|아루이테 이케마스카?
+道に迷いました。|미치니 마요이마시타
+この地図で今どこにいますか？|코노 치즈데 이마 도코니 이마스카?
+近くに地下鉄の駅はありますか？|치카쿠니 치카테츠노 에키와 아리마스카?
+左に曲がって / 右に曲がって / まっすぐ|히다리니 마갓테 / 미기니 마갓테 / 맛스구
+角にあります。|카도니 아리마스
+地図で教えていただけますか？|치즈데 오시에테 이타다케마스카?
+入場料はいくらですか？|뉴조료와 이쿠라데스카?
+大人二枚お願いします。|오토나 니마이 오네가이시마스
+何時に閉まりますか？|난지니 시마리마스카?
+ここで写真を撮ってもいいですか？|코코데 샤신오 톳테모 이이데스카?
+写真を撮っていただけますか？|샤신오 톳테 이타다케마스카?
+ガイドツアーはありますか？|가이도 츠아와 아리마스카?
+韓国語の地図はありますか？|칸코쿠고노 치즈와 아리마스카?
+入口はどこですか？|이리구치와 도코데스카?
+助けて！|타스케테!
+警察を呼んでください。|케이사츠오 욘데 쿠다사이
+救急車を呼んでください。|큐큐샤오 욘데 쿠다사이
+パスポートをなくしました。|파스포토오 나쿠시마시타
+財布を盗まれました。|사이후오 누스마레마시타
+医者が必要です。|이샤가 히츠요데스
+一番近い病院はどこですか？|이치반 치카이 뵤인와 도코데스카?
+薬局はどこですか？|약쿄쿠와 도코데스카?
+頭が痛いです。|아타마가 이타이데스
+熱があります。|네츠가 아리마스
+韓国大使館はどこですか？|칸코쿠 타이시칸와 도코데스카?
+警察の証明書が必要です。|케이사츠노 쇼메이쇼가 히츠요데스`,
+zh:`你好。|니 하오|nǐ hǎo
+打扰一下。|다라오 이샤|dǎrǎo yíxià
+非常感谢。|페이창 간셰|fēicháng gǎnxiè
+不客气。|부 커치|bú kèqi
+对不起。|두이부치|duìbuqǐ
+不好意思，我听不懂。|뿌하오이쓰, 워 팅부둥|bù hǎoyìsi, wǒ tīng bu dǒng
+请再说一遍。|칭 짜이 숴 이볜|qǐng zài shuō yí biàn
+请说慢一点。|칭 숴 만 이뎬|qǐng shuō màn yìdiǎn
+你会说韩语吗？|니 후이 숴 한위 마?|nǐ huì shuō Hányǔ ma?
+我来自韩国。|워 라이쯔 한궈|wǒ láizì Hánguó
+好的，谢谢。/ 不用了，谢谢。|하오더, 셰셰 / 부융러, 셰셰|hǎo de, xièxie / búyòng le, xièxie
+能帮我一下吗？|넝 빵 워 이샤 마?|néng bāng wǒ yíxià ma?
+多少钱？|둬샤오 첸?|duōshao qián?
+洗手间在哪儿？|시서우졘 짜이 날?|xǐshǒujiān zài nǎr?
+能写下来吗？|넝 셰 샤라이 마?|néng xiě xiàlái ma?
+这是我的护照。|저 스 워더 후자오|zhè shì wǒ de hùzhào
+我是来旅游的。|워 스 라이 뤼유 더|wǒ shì lái lǚyóu de
+我待五天。|워 다이 우 톈|wǒ dāi wǔ tiān
+我住在希尔顿酒店。|워 주 짜이 시얼둔 주뎬|wǒ zhù zài Xī'ěrdùn jiǔdiàn
+我要靠窗的座位。|워 야오 카오촹 더 쭤웨이|wǒ yào kào chuāng de zuòwèi
+我有一件行李要托运。|워 여우 이졘 싱리 야오 퉈윈|wǒ yǒu yí jiàn xíngli yào tuōyùn
+23号登机口在哪儿？|얼스싼 하오 덩지커우 짜이 날?|èrshísān hào dēngjīkǒu zài nǎr?
+这个航班准时吗？|저거 항반 준스 마?|zhège hángbān zhǔnshí ma?
+在哪儿取行李？|짜이 날 취 싱리?|zài nǎr qǔ xíngli?
+我的行李没到。|워더 싱리 메이 다오|wǒ de xíngli méi dào
+在哪儿可以换钱？|짜이 날 커이 환첸?|zài nǎr kěyǐ huànqián?
+我没有需要申报的东西。|워 메이여우 쉬야오 선바오 더 둥시|wǒ méiyǒu xūyào shēnbào de dōngxi
+我要转机去巴黎。|워 야오 좐지 취 바리|wǒ yào zhuǎnjī qù Bālí
+请给我一杯水。|칭 게이 워 이베이 수이|qǐng gěi wǒ yì bēi shuǐ
+我要鸡肉。|워 야오 지러우|wǒ yào jīròu
+能给我一条毯子吗？|넝 게이 워 이탸오 탄쯔 마?|néng gěi wǒ yì tiáo tǎnzi ma?
+不好意思，借过一下。|뿌하오이쓰, 졔궈 이샤|bù hǎoyìsi, jièguò yíxià
+我可以把座椅放倒吗？|워 커이 바 쭤이 팡다오 마?|wǒ kěyǐ bǎ zuòyǐ fàngdǎo ma?
+这好像是我的座位。|저 하오샹 스 워더 쭤웨이|zhè hǎoxiàng shì wǒ de zuòwèi
+能帮我放一下行李吗？|넝 빵 워 팡 이샤 싱리 마?|néng bāng wǒ fàng yíxià xíngli ma?
+我不舒服。|워 뿌 수푸|wǒ bù shūfu
+我要办理入住。|워 야오 반리 루주|wǒ yào bànlǐ rùzhù
+我用金的名字预订了。|워 융 진 더 밍쯔 위딩 러|wǒ yòng Jīn de míngzi yùdìng le
+几点退房？|지뎬 퉤이팡?|jǐ diǎn tuìfáng?
+含早餐吗？|한 짜오찬 마?|hán zǎocān ma?
+Wi-Fi密码是多少？|와이파이 미마 스 둬샤오?|Wi-Fi mìmǎ shì duōshao?
+能帮我寄存行李吗？|넝 빵 워 지춘 싱리 마?|néng bāng wǒ jìcún xíngli ma?
+空调坏了。|쿵탸오 화이 러|kōngtiáo huài le
+没有热水。|메이여우 러수이|méiyǒu rèshuǐ
+我把房卡锁在房间里了。|워 바 팡카 숴 짜이 팡졘 리 러|wǒ bǎ fángkǎ suǒ zài fángjiān lǐ le
+能再给我几条毛巾吗？|넝 짜이 게이 워 지탸오 마오진 마?|néng zài gěi wǒ jǐ tiáo máojīn ma?
+可以晚点退房吗？|커이 완뎬 퉤이팡 마?|kěyǐ wǎndiǎn tuìfáng ma?
+能帮我叫辆出租车吗？|넝 빵 워 쟈오 량 추쭈처 마?|néng bāng wǒ jiào liàng chūzūchē ma?
+两位。|량 웨이|liǎng wèi
+请给我看一下菜单。|칭 게이 워 칸 이샤 차이단|qǐng gěi wǒ kàn yíxià càidān
+你推荐什么？|니 퉤이졘 선머?|nǐ tuījiàn shénme?
+我要这个。|워 야오 저거|wǒ yào zhège
+我对花生过敏。|워 두이 화성 궈민|wǒ duì huāshēng guòmǐn
+不要加冰。|부야오 쟈 빙|búyào jiā bīng
+不要太辣。|부야오 타이 라|búyào tài là
+打包带走。|다바오 다이저우|dǎbāo dàizǒu
+在这儿吃。|짜이 졀 츠|zài zhèr chī
+买单。|마이단|mǎidān
+可以分开付吗？|커이 펀카이 푸 마?|kěyǐ fēnkāi fù ma?
+含服务费吗？|한 푸우페이 마?|hán fúwùfèi ma?
+一杯冰美式。|이 베이 빙메이스|yì bēi bīng měishì
+这不是我点的。|저 부스 워 뎬 더|zhè bú shì wǒ diǎn de
+能再给我一点水吗？|넝 짜이 게이 워 이뎬 수이 마?|néng zài gěi wǒ yìdiǎn shuǐ ma?
+我只是看看。|워 즈스 칸칸|wǒ zhǐshì kànkan
+可以试穿吗？|커이 스촨 마?|kěyǐ shìchuān ma?
+有大一号的吗？|여우 다 이 하오 더 마?|yǒu dà yí hào de ma?
+有黑色的吗？|여우 헤이써 더 마?|yǒu hēisè de ma?
+能便宜一点吗？|넝 피옌이 이뎬 마?|néng piányi yìdiǎn ma?
+我买这个。|워 마이 저거|wǒ mǎi zhège
+可以刷卡吗？|커이 솨카 마?|kěyǐ shuākǎ ma?
+可以退税吗？|커이 퉤이수이 마?|kěyǐ tuìshuì ma?
+能帮我包装成礼物吗？|넝 빵 워 바오좡 청 리우 마?|néng bāng wǒ bāozhuāng chéng lǐwù ma?
+我想退货。|워 샹 퉤이훠|wǒ xiǎng tuìhuò
+试衣间在哪儿？|스이졘 짜이 날?|shìyījiān zài nǎr?
+在哪儿买票？|짜이 날 마이 퍄오?|zài nǎr mǎi piào?
+一张去市中心的票。|이 장 취 스중신 더 퍄오|yì zhāng qù shì zhōngxīn de piào
+这辆公交车去机场吗？|저 량 궁쟈오처 취 지창 마?|zhè liàng gōngjiāochē qù jīchǎng ma?
+去中央站坐几号线？|취 중양잔 쭤 지 하오셴?|qù Zhōngyāng zhàn zuò jǐ hào xiàn?
+我应该在哪儿下车？|워 잉가이 짜이 날 샤처?|wǒ yīnggāi zài nǎr xiàchē?
+到了请告诉我。|다오 러 칭 가오쑤 워|dào le qǐng gàosu wǒ
+请到这个地址。|칭 다오 저거 디즈|qǐng dào zhège dìzhǐ
+需要多长时间？|쉬야오 둬창 스졘?|xūyào duō cháng shíjiān?
+请在这儿停车。|칭 짜이 졀 팅처|qǐng zài zhèr tíngchē
+车费多少钱？|처페이 둬샤오 첸?|chēfèi duōshao qián?
+这里有人吗？|저리 여우 런 마?|zhèlǐ yǒu rén ma?
+我错过了火车。|워 춰궈 러 훠처|wǒ cuòguò le huǒchē
+博物馆怎么走？|보우관 쩐머 쩌우?|bówùguǎn zěnme zǒu?
+离这儿远吗？|리 졀 위안 마?|lí zhèr yuǎn ma?
+可以走过去吗？|커이 쩌우 궈취 마?|kěyǐ zǒu guòqù ma?
+我迷路了。|워 미루 러|wǒ mílù le
+我们在地图上的哪里？|워먼 짜이 디투 상 더 나리?|wǒmen zài dìtú shang de nǎlǐ?
+附近有地铁站吗？|푸진 여우 디톄잔 마?|fùjìn yǒu dìtiě zhàn ma?
+左转 / 右转 / 直走|쭤좐 / 여우좐 / 즈쩌우|zuǒ zhuǎn / yòu zhuǎn / zhí zǒu
+在拐角处。|짜이 과이쟈오 추|zài guǎijiǎo chù
+能在地图上指给我看吗？|넝 짜이 디투 상 즈 게이 워 칸 마?|néng zài dìtú shang zhǐ gěi wǒ kàn ma?
+门票多少钱？|먼퍄오 둬샤오 첸?|ménpiào duōshao qián?
+两张成人票。|량 장 청런 퍄오|liǎng zhāng chéngrén piào
+几点关门？|지뎬 관먼?|jǐ diǎn guānmén?
+这里可以拍照吗？|저리 커이 파이자오 마?|zhèlǐ kěyǐ pāizhào ma?
+能帮我们拍张照吗？|넝 빵 워먼 파이 장 자오 마?|néng bāng wǒmen pāi zhāng zhào ma?
+有导游讲解吗？|여우 다오유 쟝졔 마?|yǒu dǎoyóu jiǎngjiě ma?
+有韩语地图吗？|여우 한위 디투 마?|yǒu Hányǔ dìtú ma?
+入口在哪儿？|루커우 짜이 날?|rùkǒu zài nǎr?
+救命！|쥬밍!|jiùmìng!
+请帮我报警。|칭 빵 워 바오징|qǐng bāng wǒ bàojǐng
+请叫救护车。|칭 쟈오 쥬후처|qǐng jiào jiùhùchē
+我的护照丢了。|워더 후자오 듀 러|wǒ de hùzhào diū le
+我的钱包被偷了。|워더 첸바오 베이 터우 러|wǒ de qiánbāo bèi tōu le
+我需要看医生。|워 쉬야오 칸 이성|wǒ xūyào kàn yīshēng
+最近的医院在哪儿？|쭈이진 더 이위안 짜이 날?|zuìjìn de yīyuàn zài nǎr?
+药店在哪儿？|야오뎬 짜이 날?|yàodiàn zài nǎr?
+我头疼。|워 터우텅|wǒ tóuténg
+我发烧了。|워 파사오 러|wǒ fāshāo le
+韩国大使馆在哪儿？|한궈 다스관 짜이 날?|Hánguó dàshǐguǎn zài nǎr?
+我需要警察的报案证明。|워 쉬야오 징차 더 바오안 정밍|wǒ xūyào jǐngchá de bào'àn zhèngmíng`,
+it:`Buongiorno.|본조르노
+Mi scusi.|미 스쿠지
+Grazie mille.|그라치에 밀레
+Prego.|프레고
+Mi dispiace.|미 디스피아체
+Scusi, non capisco.|스쿠지, 논 카피스코
+Può ripetere, per favore?|푸오 리페테레, 페르 파보레?
+Può parlare più lentamente?|푸오 파를라레 퓨 렌타멘테?
+Parla coreano?|파를라 코레아노?
+Vengo dalla Corea.|벵고 달라 코레아
+Sì, grazie. / No, grazie.|시, 그라치에 / 노, 그라치에
+Mi può aiutare?|미 푸오 아이우타레?
+Quanto costa?|콴토 코스타?
+Dov'è il bagno?|도베 일 바뇨?
+Me lo può scrivere?|메 로 푸오 스크리베레?
+Ecco il mio passaporto.|에코 일 미오 파사포르토
+Sono qui per turismo.|소노 퀴 페르 투리즈모
+Resto cinque giorni.|레스토 친퀘 조르니
+Alloggio all'Hotel Hilton.|알로조 알로텔 힐튼
+Vorrei un posto vicino al finestrino, per favore.|보레이 운 포스토 비치노 알 피네스트리노, 페르 파보레
+Ho una valigia da imbarcare.|오 우나 발리자 다 임바르카레
+Dov'è il gate 23?|도베 일 게이트 벤티트레?
+Il volo è in orario?|일 볼로 에 인 오라리오?
+Dove ritiro i bagagli?|도베 리티로 이 바갈리?
+Il mio bagaglio non è arrivato.|일 미오 바갈리오 논 에 아리바토
+Dove posso cambiare i soldi?|도베 포소 캄비아레 이 솔디?
+Non ho niente da dichiarare.|논 오 니엔테 다 디키아라레
+Ho una coincidenza per Parigi.|오 우나 코인치덴차 페르 파리지
+Posso avere dell'acqua, per favore?|포소 아베레 델라쿠아, 페르 파보레?
+Pollo, per favore.|폴로, 페르 파보레
+Posso avere una coperta?|포소 아베레 우나 코페르타?
+Mi scusi, posso passare?|미 스쿠지, 포소 파사레?
+Posso reclinare il sedile?|포소 레클리나레 일 세딜레?
+Credo che questo sia il mio posto.|크레도 케 퀘스토 시아 일 미오 포스토
+Mi può aiutare con la valigia?|미 푸오 아이우타레 콘 라 발리자?
+Mi sento male.|미 센토 말레
+Vorrei fare il check-in.|보레이 파레 일 체크인
+Ho una prenotazione a nome Kim.|오 우나 프레노타치오네 아 노메 킴
+A che ora è il check-out?|아 케 오라 에 일 체크아웃?
+La colazione è inclusa?|라 콜라치오네 에 인클루자?
+Qual è la password del Wi-Fi?|콸 에 라 패스워드 델 와이파이?
+Posso lasciare qui i bagagli?|포소 라샤레 퀴 이 바갈리?
+L'aria condizionata non funziona.|라리아 콘디치오나타 논 푼치오나
+Non c'è acqua calda.|논 체 아쿠아 칼다
+Sono rimasto chiuso fuori.|소노 리마스토 키우조 푸오리
+Posso avere altri asciugamani?|포소 아베레 알트리 아슈가마니?
+Posso fare il check-out più tardi?|포소 파레 일 체크아웃 퓨 타르디?
+Mi può chiamare un taxi?|미 푸오 키아마레 운 탁시?
+Un tavolo per due, per favore.|운 타볼로 페르 두에, 페르 파보레
+Posso vedere il menù?|포소 베데레 일 메누?
+Cosa mi consiglia?|코자 미 콘실리아?
+Prendo questo, per favore.|프렌도 퀘스토, 페르 파보레
+Sono allergico alle arachidi.|소노 알레르지코 알레 아라키디
+Senza ghiaccio, per favore.|센차 갸초, 페르 파보레
+Non troppo piccante, per favore.|논 트로포 피칸테, 페르 파보레
+Da portare via, per favore.|다 포르타레 비아, 페르 파보레
+Da mangiare qui.|다 만자레 퀴
+Il conto, per favore.|일 콘토, 페르 파보레
+Possiamo pagare separatamente?|포시아모 파가레 세파라타멘테?
+Il servizio è incluso?|일 세르비치오 에 인클루조?
+Un americano con ghiaccio, per favore.|운 아메리카노 콘 갸초, 페르 파보레
+Questo non è quello che ho ordinato.|퀘스토 논 에 퀠로 케 오 오르디나토
+Posso avere ancora un po' d'acqua?|포소 아베레 안코라 운 포 다쿠아?
+Sto solo guardando.|스토 솔로 과르단도
+Posso provarlo?|포소 프로바를로?
+Avete una taglia più grande?|아베테 우나 탈리아 퓨 그란데?
+Ce l'avete in nero?|체 라베테 인 네로?
+Mi può fare uno sconto?|미 푸오 파레 우노 스콘토?
+Lo prendo.|로 프렌도
+Posso pagare con la carta?|포소 파가레 콘 라 카르타?
+Posso avere il rimborso IVA?|포소 아베레 일 림보르소 이바?
+Me lo può incartare per regalo?|메 로 푸오 인카르타레 페르 레갈로?
+Vorrei restituire questo.|보레이 레스티투이레 퀘스토
+Dov'è il camerino?|도베 일 카메리노?
+Dove posso comprare il biglietto?|도베 포소 콤프라레 일 빌리에토?
+Un biglietto per il centro, per favore.|운 빌리에토 페르 일 첸트로, 페르 파보레
+Questo autobus va all'aeroporto?|퀘스토 아우토부스 바 알라에로포르토?
+Quale linea va alla Stazione Centrale?|콸레 리네아 바 알라 스타치오네 첸트랄레?
+Dove devo scendere?|도베 데보 셴데레?
+Mi avvisa quando arriviamo?|미 아비자 콴도 아리비아모?
+A questo indirizzo, per favore.|아 퀘스토 인디리초, 페르 파보레
+Quanto ci vuole?|콴토 치 부올레?
+Si fermi qui, per favore.|시 페르미 퀴, 페르 파보레
+Quanto costa la corsa?|콴토 코스타 라 코르사?
+È libero questo posto?|에 리베로 퀘스토 포스토?
+Ho perso il treno.|오 페르소 일 트레노
+Come arrivo al museo?|코메 아리보 알 무제오?
+È lontano da qui?|에 론타노 다 퀴?
+Ci posso andare a piedi?|치 포소 안다레 아 피에디?
+Mi sono perso.|미 소노 페르소
+Dove siamo su questa mappa?|도베 시아모 수 퀘스타 마파?
+C'è una stazione della metro qui vicino?|체 우나 스타치오네 델라 메트로 퀴 비치노?
+Giri a sinistra. / Giri a destra. / Sempre dritto.|지리 아 시니스트라 / 지리 아 데스트라 / 셈프레 드리토
+È all'angolo.|에 알란골로
+Me lo può mostrare sulla mappa?|메 로 푸오 모스트라레 술라 마파?
+Quanto costa il biglietto d'ingresso?|콴토 코스타 일 빌리에토 딘그레소?
+Due adulti, per favore.|두에 아둘티, 페르 파보레
+A che ora chiude?|아 케 오라 키우데?
+Si possono fare foto qui?|시 포소노 파레 포토 퀴?
+Ci può fare una foto?|치 푸오 파레 우나 포토?
+C'è una visita guidata?|체 우나 비지타 귀다타?
+Avete una mappa in coreano?|아베테 우나 마파 인 코레아노?
+Dov'è l'ingresso?|도베 린그레소?
+Aiuto!|아이우토!
+Chiami la polizia, per favore.|키아미 라 폴리치아, 페르 파보레
+Chiami un'ambulanza, per favore.|키아미 운암불란차, 페르 파보레
+Ho perso il passaporto.|오 페르소 일 파사포르토
+Mi hanno rubato il portafoglio.|미 안노 루바토 일 포르타폴리오
+Ho bisogno di un medico.|오 비조뇨 디 운 메디코
+Dov'è l'ospedale più vicino?|도베 로스페달레 퓨 비치노?
+Dov'è una farmacia?|도베 우나 파르마치아?
+Ho mal di testa.|오 말 디 테스타
+Ho la febbre.|오 라 페브레
+Dov'è l'ambasciata coreana?|도베 람바샤타 코레아나?
+Mi serve una denuncia della polizia.|미 세르베 우나 데눈차 델라 폴리치아`,
+fr:`Bonjour.|봉주르
+Excusez-moi.|엑스퀴제 무아
+Merci beaucoup.|메르시 보쿠
+De rien.|드 리앙
+Je suis désolé(e).|주 쉬 데졸레
+Désolé(e), je ne comprends pas.|데졸레, 주 느 콩프랑 파
+Pouvez-vous répéter, s'il vous plaît ?|푸베부 레페테, 실 부 플레?
+Pouvez-vous parler plus lentement ?|푸베부 파를레 플뤼 랑트망?
+Parlez-vous coréen ?|파를레부 코레앙?
+Je viens de Corée.|주 비앙 드 코레
+Oui, s'il vous plaît. / Non, merci.|위, 실 부 플레 / 농, 메르시
+Pouvez-vous m'aider ?|푸베부 메데?
+C'est combien ?|세 콩비앙?
+Où sont les toilettes ?|우 송 레 투알레트?
+Pouvez-vous l'écrire ?|푸베부 레크리르?
+Voici mon passeport.|부아시 몽 파스포르
+Je suis ici pour le tourisme.|주 쉬 이시 푸르 르 투리슴
+Je reste cinq jours.|주 레스트 생크 주르
+Je loge à l'hôtel Hilton.|주 로주 아 로텔 힐톤
+Une place côté hublot, s'il vous plaît.|윈 플라스 코테 위블로, 실 부 플레
+J'ai un bagage à enregistrer.|제 앙 바가주 아 앙르지스트레
+Où est la porte 23 ?|우 에 라 포르트 뱅트루아?
+Le vol est-il à l'heure ?|르 볼 에틸 아 뢰르?
+Où puis-je récupérer mes bagages ?|우 퓌주 레퀴페레 메 바가주?
+Mon bagage n'est pas arrivé.|몽 바가주 네 파 자리베
+Où puis-je changer de l'argent ?|우 퓌주 샹제 드 라르장?
+Je n'ai rien à déclarer.|주 네 리앙 아 데클라레
+J'ai une correspondance pour Paris.|제 윈 코레스퐁당스 푸르 파리
+Puis-je avoir de l'eau, s'il vous plaît ?|퓌주 아부아르 드 로, 실 부 플레?
+Du poulet, s'il vous plaît.|뒤 풀레, 실 부 플레
+Puis-je avoir une couverture ?|퓌주 아부아르 윈 쿠베르튀르?
+Excusez-moi, je peux passer ?|엑스퀴제 무아, 주 푸 파세?
+Puis-je incliner mon siège ?|퓌주 앵클리네 몽 시에주?
+Je crois que c'est ma place.|주 크루아 크 세 마 플라스
+Pouvez-vous m'aider avec mon sac ?|푸베부 메데 아베크 몽 삭?
+Je ne me sens pas bien.|주 느 므 상 파 비앙
+Je voudrais m'enregistrer.|주 부드레 망르지스트레
+J'ai une réservation au nom de Kim.|제 윈 레제르바시옹 오 농 드 킴
+À quelle heure faut-il libérer la chambre ?|아 켈 뢰르 포틸 리베레 라 샹브르?
+Le petit-déjeuner est-il inclus ?|르 프티데죄네 에틸 앵클뤼?
+Quel est le mot de passe du Wi-Fi ?|켈 레 르 모 드 파스 뒤 위피?
+Pouvez-vous garder mes bagages ?|푸베부 가르데 메 바가주?
+La climatisation ne marche pas.|라 클리마티자시옹 느 마르슈 파
+Il n'y a pas d'eau chaude.|일 니 아 파 도 쇼드
+J'ai laissé ma clé dans la chambre.|제 레세 마 클레 당 라 샹브르
+Puis-je avoir d'autres serviettes ?|퓌주 아부아르 도트르 세르비에트?
+Puis-je libérer la chambre plus tard ?|퓌주 리베레 라 샹브르 플뤼 타르?
+Pouvez-vous m'appeler un taxi ?|푸베부 마플레 앙 탁시?
+Une table pour deux, s'il vous plaît.|윈 타블 푸르 되, 실 부 플레
+Puis-je voir la carte ?|퓌주 부아르 라 카르트?
+Qu'est-ce que vous me conseillez ?|케스크 부 므 콩세예?
+Je vais prendre ça, s'il vous plaît.|주 베 프랑드르 사, 실 부 플레
+Je suis allergique aux cacahuètes.|주 쉬 알레르지크 오 카카우에트
+Sans glaçons, s'il vous plaît.|상 글라송, 실 부 플레
+Pas trop épicé, s'il vous plaît.|파 트로 에피세, 실 부 플레
+À emporter, s'il vous plaît.|아 앙포르테, 실 부 플레
+Sur place, s'il vous plaît.|쉬르 플라스, 실 부 플레
+L'addition, s'il vous plaît.|라디시옹, 실 부 플레
+Pouvons-nous payer séparément ?|푸봉누 페예 세파레망?
+Le service est-il compris ?|르 세르비스 에틸 콩프리?
+Un americano glacé, s'il vous plaît.|앙 아메리카노 글라세, 실 부 플레
+Ce n'est pas ce que j'ai commandé.|스 네 파 스 크 제 코망데
+Puis-je avoir encore de l'eau ?|퓌주 아부아르 앙코르 드 로?
+Je regarde seulement.|주 르가르드 쇨망
+Puis-je l'essayer ?|퓌주 레세예?
+Vous l'avez en plus grand ?|부 라베 앙 플뤼 그랑?
+Vous l'avez en noir ?|부 라베 앙 누아르?
+Vous pouvez me faire une réduction ?|부 푸베 므 페르 윈 레뒥시옹?
+Je le prends.|주 르 프랑
+Je peux payer par carte ?|주 푸 페예 파르 카르트?
+Puis-je avoir la détaxe ?|퓌주 아부아르 라 데탁스?
+Pouvez-vous faire un paquet cadeau ?|푸베부 페르 앙 파케 카도?
+Je voudrais rendre ceci.|주 부드레 랑드르 스시
+Où sont les cabines d'essayage ?|우 송 레 카빈 데세야주?
+Où puis-je acheter un billet ?|우 퓌주 아슈테 앙 비예?
+Un billet pour le centre-ville, s'il vous plaît.|앙 비예 푸르 르 상트르빌, 실 부 플레
+Ce bus va-t-il à l'aéroport ?|스 뷔스 바틸 아 라에로포르?
+Quelle ligne va à la gare centrale ?|켈 리뉴 바 아 라 가르 상트랄?
+Où dois-je descendre ?|우 두아주 데상드르?
+Pouvez-vous me prévenir quand on arrive ?|푸베부 므 프레브니르 캉 토 나리브?
+À cette adresse, s'il vous plaît.|아 세트 아드레스, 실 부 플레
+Combien de temps ça prend ?|콩비앙 드 탕 사 프랑?
+Arrêtez-vous ici, s'il vous plaît.|아레테부 이시, 실 부 플레
+C'est combien, la course ?|세 콩비앙, 라 쿠르스?
+Cette place est libre ?|세트 플라스 에 리브르?
+J'ai raté mon train.|제 라테 몽 트랭
+Comment aller au musée ?|코망 알레 오 뮈제?
+C'est loin d'ici ?|세 루앵 디시?
+On peut y aller à pied ?|옹 푸 이 알레 아 피에?
+Je suis perdu(e).|주 쉬 페르뒤
+Où sommes-nous sur ce plan ?|우 솜누 쉬르 스 플랑?
+Il y a une station de métro près d'ici ?|일 리 아 윈 스타시옹 드 메트로 프레 디시?
+Tournez à gauche. / Tournez à droite. / Tout droit.|투르네 아 고슈 / 투르네 아 드루아트 / 투 드루아
+C'est au coin.|세 토 쿠앵
+Pouvez-vous me montrer sur le plan ?|푸베부 므 몽트레 쉬르 르 플랑?
+Combien coûte l'entrée ?|콩비앙 쿠트 랑트레?
+Deux adultes, s'il vous plaît.|되 자뒬트, 실 부 플레
+À quelle heure ça ferme ?|아 켈 뢰르 사 페름?
+On peut prendre des photos ici ?|옹 푸 프랑드르 데 포토 이시?
+Pouvez-vous nous prendre en photo ?|푸베부 누 프랑드르 앙 포토?
+Y a-t-il une visite guidée ?|이 아틸 윈 비지트 기데?
+Avez-vous un plan en coréen ?|아베부 앙 플랑 앙 코레앙?
+Où est l'entrée ?|우 에 랑트레?
+Au secours !|오 스쿠르!
+Appelez la police, s'il vous plaît.|아플레 라 폴리스, 실 부 플레
+Appelez une ambulance, s'il vous plaît.|아플레 윈 앙뷜랑스, 실 부 플레
+J'ai perdu mon passeport.|제 페르뒤 몽 파스포르
+On m'a volé mon portefeuille.|옹 마 볼레 몽 포르트푀유
+J'ai besoin d'un médecin.|제 브주앵 당 메드생
+Où est l'hôpital le plus proche ?|우 에 로피탈 르 플뤼 프로슈?
+Où est la pharmacie ?|우 에 라 파르마시?
+J'ai mal à la tête.|제 말 아 라 테트
+J'ai de la fièvre.|제 드 라 피에브르
+Où est l'ambassade de Corée ?|우 에 랑바사드 드 코레?
+J'ai besoin d'un récépissé de plainte.|제 브주앵 당 레세피세 드 플랭트`,
+};
+
+const LANGS = {
+  en: { label: '영어', native: 'English', tts: 'en-US', ex: '화장실, check in' },
+  ja: { label: '일본어', native: '日本語', tts: 'ja-JP', ex: '화장실, トイレ' },
+  zh: { label: '중국어', native: '中文', tts: 'zh-CN', ex: '화장실, 洗手间, xishoujian' },
+  it: { label: '이탈리아어', native: 'Italiano', tts: 'it-IT', ex: '화장실, bagno' },
+  fr: { label: '프랑스어', native: 'Français', tts: 'fr-FR', ex: '화장실, toilettes' },
+};
+
+const CATNAME = Object.fromEntries(CATS);
+const P = RAW.trim().split('\n').map((l, i) => {
+  const [cat, en, pr, ko, tip] = l.split('|');
+  return { id: i, cat, ko, t: { en: { text: en, pr, tip: tip || '' } } };
+});
+for (const [lg, raw] of Object.entries(LANG_RAW)) {
+  raw.trim().split('\n').forEach((l, i) => {
+    const [text, pr, rom] = l.split('|');
+    if (P[i]) P[i].t[lg] = { text, pr, rom: rom || '', tip: '' };
+  });
+}
+
+// ───────── 저장 ─────────
+const KEY = 'travel-english-v1';
+let st = { favs: [], rate: 0.9, cat: 'all', best: 0, lang: 'en' };
+try { Object.assign(st, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+if (!LANGS[st.lang]) st.lang = 'en';
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+const isFav = id => st.favs.includes(id);
+const T = p => p.t[st.lang];
+
+// ───────── 소리 ─────────
+let voice = null;
+function pickVoice() {
+  voice = null;
+  if (!('speechSynthesis' in window)) return;
+  const code = LANGS[st.lang].tts, base = code.slice(0, 2);
+  const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().startsWith(base));
+  voice = vs.find(v => v.lang.replace('_', '-') === code && /Google|Samantha|Aria|Jenny|Kyoko|Ting|Alice|Amelie|Thomas|Natural/i.test(v.name))
+    || vs.find(v => v.lang.replace('_', '-') === code) || vs[0] || null;
+}
+if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+let iosTipShown = false;
+function speak(text, btn) {
+  if (!('speechSynthesis' in window)) { toast('이 기기에서는 음성 읽기를 쓸 수 없어요.'); return; }
+  // 아이폰: 아무것도 읽지 않을 때 cancel() 직후 speak()를 하면 소리가 사라지는 문제가 있어서 필요할 때만 취소
+  if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel();
+  if (speechSynthesis.paused) speechSynthesis.resume();
+  if (IOS && !iosTipShown) { iosTipShown = true; toast('소리가 안 나면 무음 모드를 끄고 음량을 올려 주세요'); }
+  if (!voice && speechSynthesis.getVoices().length) toast(`이 기기에 ${LANGS[st.lang].label} 음성이 없어 소리가 안 날 수 있어요.`);
+  // (e)·(a) 같은 성별 표시는 읽지 않고, / 는 문장 끊기로 읽는다
+  const u = new SpeechSynthesisUtterance(text.replace(/\((e|a)\)/g, '').replace(/\s*\/\s*/g, '. '));
+  u.lang = LANGS[st.lang].tts; u.rate = st.rate; if (voice) u.voice = voice;
+  document.querySelectorAll('.speaking').forEach(b => b.classList.remove('speaking'));
+  u.onend = () => btn && btn.classList.remove('speaking');
+  u.onerror = e => {
+    if (btn) btn.classList.remove('speaking');
+    if (e.error && e.error !== 'interrupted' && e.error !== 'canceled') toast('소리를 낼 수 없어요. 무음 모드와 음량을 확인해 주세요.');
+  };
+  if (btn) btn.classList.add('speaking');
+  speechSynthesis.speak(u);
+}
+let tt;
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 1800); }
+
+// ───────── 검색 ─────────
+// 악센트·성조 부호를 떼고 비교 (é → e, ǎ → a). 한글은 NFC로 되돌려 그대로 유지
+const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').normalize('NFC').toLowerCase();
+const norm = s => fold(s).replace(/[.,!?'’"/~()\-？！，。、]/g, ' ').replace(/\s+/g, ' ').trim();
+const squash = s => norm(s).replace(/ /g, '');
+function matches(p, q) {
+  const t = T(p);
+  const terms = norm(q).split(' ').filter(Boolean);
+  const hay = norm(`${t.text} ${t.pr} ${t.rom || ''} ${p.ko} ${t.tip || ''} ${CATNAME[p.cat]}`);
+  const hayS = hay.replace(/ /g, '');
+  // 띄어쓰기 무시 비교는 한글 검색어에만 (예: "체크 인" ↔ "체크인")
+  const ko = x => /[가-힣]/.test(x);
+  return terms.every(x => hay.includes(x) || (ko(x) && hayS.includes(x))) || (ko(q) && hayS.includes(squash(q)));
+}
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function hilite(text, q) {
+  const terms = norm(q).split(' ').filter(Boolean);
+  if (!terms.length || !text) return esc(text || '');
+  const f = fold(text);
+  if (f.length !== text.length) return esc(text);
+  const on = new Array(text.length).fill(false);
+  for (const t of terms) { let i = f.indexOf(t); while (i >= 0) { for (let k = i; k < i + t.length; k++) on[k] = true; i = f.indexOf(t, i + 1); } }
+  let out = '', open = false;
+  for (let i = 0; i < text.length; i++) {
+    if (on[i] && !open) { out += '<mark>'; open = true; } else if (!on[i] && open) { out += '</mark>'; open = false; }
+    out += esc(text[i]);
+  }
+  return out + (open ? '</mark>' : '');
+}
+
+// ───────── 카드 ─────────
+const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>';
+const ICON_STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
+function card(p, q = '', showCat = false) {
+  const t = T(p);
+  return `<article class="card" data-id="${p.id}">
+    <div class="txt">
+      <div class="en" lang="${st.lang}">${hilite(t.text, q)}</div>
+      ${t.rom ? `<div class="rom" lang="zh-Latn">${hilite(t.rom, q)}</div>` : ''}
+      <div class="pr">${hilite(t.pr, q)}</div>
+      <div class="ko">${hilite(p.ko, q)}</div>
+      ${t.tip ? `<div class="tip">${hilite(t.tip, q)}</div>` : ''}
+      ${showCat ? `<div class="cat">${CATNAME[p.cat]}</div>` : ''}
+    </div>
+    <div class="acts">
+      <button class="ib play" data-play aria-label="발음 듣기">${ICON_PLAY}</button>
+      <button class="ib fav ${isFav(p.id) ? 'on' : ''}" data-fav aria-label="즐겨찾기" aria-pressed="${isFav(p.id)}">${ICON_STAR}</button>
+    </div></article>`;
+}
+
+// ───────── 화면 ─────────
+const view = document.getElementById('view'), qIn = document.getElementById('q');
+let tab = 'list';
+
+const scopeName = () => st.cat === 'all' ? '전체' : CATNAME[st.cat];
+function renderChips() {
+  // 검색 중이면 칩 숫자는 상황별 검색 결과 수
+  const q = qIn.value.trim();
+  const src = q ? P.filter(p => matches(p, q)) : P;
+  const counts = {}; CATS.forEach(([id]) => counts[id] = 0); src.forEach(p => counts[p.cat]++);
+  qIn.placeholder = st.cat === 'all' ? `전체에서 검색 (예: ${LANGS[st.lang].ex})` : `${CATNAME[st.cat]}에서 검색`;
+  document.getElementById('chips').innerHTML =
+    `<button data-cat="all" class="${st.cat === 'all' ? 'on' : ''}">전체<small>${src.length}</small></button>` +
+    CATS.map(([id, name]) => `<button data-cat="${id}" class="${st.cat === id ? 'on' : ''}">${name}<small>${counts[id]}</small></button>`).join('');
+}
+
+function renderList() {
+  const q = qIn.value.trim();
+  document.getElementById('clearQ').hidden = !q;
+  if (q) {
+    const all = P.filter(p => matches(p, q));
+    const hits = st.cat === 'all' ? all : all.filter(p => p.cat === st.cat);
+    const widen = st.cat !== 'all' && all.length > hits.length
+      ? `<div class="sugs"><button data-wide>전체에서 찾기 (${all.length}개)</button></div>` : '';
+    if (!hits.length) {
+      view.innerHTML = `<div class="empty"><b>${scopeName()}에서 "${esc(q)}"에 맞는 표현이 없어요</b>
+        <span>${widen ? '다른 상황에는 있어요.' : '다른 낱말로 찾아보세요.'}</span>${widen ||
+        `<div class="sugs">${['화장실','얼마','택시','체크인','알레르기','잃어버렸어요','where','please'].map(s => `<button data-sug="${s}">${s}</button>`).join('')}</div>`}</div>`;
+      return;
+    }
+    view.innerHTML = `<p class="count">${scopeName()}에서 "${esc(q)}" 검색 결과 ${hits.length}개</p>` +
+      hits.map(p => card(p, q, st.cat === 'all')).join('') + widen;
+    return;
+  }
+  const cats = st.cat === 'all' ? CATS : CATS.filter(c => c[0] === st.cat);
+  view.innerHTML = cats.map(([id, name]) =>
+    `<h2 class="sec">${name}</h2>` + P.filter(p => p.cat === id).map(p => card(p)).join('')).join('');
+}
+
+function renderFav() {
+  const list = P.filter(p => isFav(p.id));
+  view.innerHTML = list.length
+    ? `<p class="count">즐겨찾기 ${list.length}개 · 퀴즈에서 즐겨찾기만 골라 연습할 수 있어요</p>` + list.map(p => card(p, '', true)).join('')
+    : `<div class="empty"><b>아직 즐겨찾기가 없어요</b><span>표현 카드의 별을 누르면 여기에 모여요. 여행 전에 꼭 쓸 문장을 모아 두세요.</span></div>`;
+}
+
+// 퀴즈
+let quiz = { scope: 'all', cur: null, n: 0, right: 0, streak: 0 };
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function pool() {
+  if (quiz.scope === 'fav') return P.filter(p => isFav(p.id));
+  if (quiz.scope === 'all') return P;
+  return P.filter(p => p.cat === quiz.scope);
+}
+function nextQuestion() {
+  const pl = pool();
+  if (pl.length < 1) { quiz.cur = null; return; }
+  let ans; do { ans = pl[Math.floor(Math.random() * pl.length)]; } while (pl.length > 1 && quiz.cur && ans.id === quiz.cur.ans.id);
+  const same = shuffle(P.filter(p => p.cat === ans.cat && p.id !== ans.id));
+  const other = shuffle(P.filter(p => p.cat !== ans.cat));
+  const wrong = same.concat(other).slice(0, 3);
+  quiz.cur = { ans, opts: shuffle([ans, ...wrong]), picked: null };
+}
+function renderQuiz() {
+  if (!quiz.cur || !pool().some(p => p.id === quiz.cur.ans.id)) nextQuestion();
+  const scopes = [['all', '전체'], ['fav', '즐겨찾기'], ...CATS];
+  const head = `<div class="qscope">${scopes.map(([id, n]) => `<button data-scope="${id}" class="${quiz.scope === id ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+  if (!quiz.cur) {
+    view.innerHTML = head + `<div class="empty"><b>즐겨찾기한 표현이 없어요</b><span>표현 탭에서 별을 눌러 문장을 모은 뒤 다시 와 주세요.</span></div>`;
+    return;
+  }
+  const { ans, opts, picked } = quiz.cur;
+  view.innerHTML = head + `<div class="qbox">
+    <div class="qmeta"><span>${CATNAME[ans.cat]}</span><span>맞힘 <b>${quiz.right}</b> / ${quiz.n} · 연속 <b>${quiz.streak}</b> · 최고 ${st.best}</span></div>
+    <div class="qk">${esc(ans.ko)}</div>
+    <div class="qhint">${picked === null ? `이 말을 ${LANGS[st.lang].label}로 하면?` : esc(T(ans).pr)}</div>
+    <div class="opts">${opts.map(o => {
+      let cls = ''; if (picked !== null) { if (o.id === ans.id) cls = 'right'; else if (o.id === picked) cls = 'wrong'; }
+      return `<button data-opt="${o.id}" class="${cls}" ${picked !== null ? 'disabled' : ''} lang="${st.lang}">${esc(T(o).text)}</button>`;
+    }).join('')}</div>
+    <div class="qfoot">${picked === null
+      ? `<button class="btn" data-skip>건너뛰기</button>`
+      : `<button class="btn" data-qplay>다시 듣기</button><button class="btn primary" data-next>다음 문제</button>`}</div></div>`;
+}
+
+function render() {
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  document.getElementById('searchWrap').hidden = tab !== 'list';
+  document.getElementById('chips').hidden = tab !== 'list';
+  if (tab === 'list') renderList(); else if (tab === 'fav') renderFav(); else renderQuiz();
+}
+
+// ───────── 이벤트 ─────────
+view.addEventListener('click', e => {
+  const c = e.target.closest('.card');
+  if (c) {
+    const p = P[+c.dataset.id];
+    const playBtn = e.target.closest('[data-play]'), favBtn = e.target.closest('[data-fav]');
+    if (favBtn) {
+      st.favs = isFav(p.id) ? st.favs.filter(x => x !== p.id) : [...st.favs, p.id]; save();
+      favBtn.classList.toggle('on', isFav(p.id)); favBtn.setAttribute('aria-pressed', isFav(p.id));
+      toast(isFav(p.id) ? '즐겨찾기에 담았어요' : '즐겨찾기에서 뺐어요');
+      if (tab === 'fav') renderFav();
+    } else speak(T(p).text, c.querySelector('[data-play]'));
+    return;
+  }
+  const sug = e.target.closest('[data-sug]');
+  if (sug) { qIn.value = sug.dataset.sug; renderChips(); renderList(); return; }
+  if (e.target.closest('[data-wide]')) { st.cat = 'all'; save(); renderChips(); renderList(); window.scrollTo(0, 0); return; }
+  const sc = e.target.closest('[data-scope]');
+  if (sc) { quiz.scope = sc.dataset.scope; quiz.cur = null; renderQuiz(); return; }
+  const op = e.target.closest('[data-opt]');
+  if (op && quiz.cur && quiz.cur.picked === null) {
+    const id = +op.dataset.opt, ok = id === quiz.cur.ans.id;
+    quiz.cur.picked = id; quiz.n++;
+    if (ok) { quiz.right++; quiz.streak++; if (quiz.streak > st.best) { st.best = quiz.streak; save(); } }
+    else quiz.streak = 0;
+    renderQuiz(); speak(T(quiz.cur.ans).text);
+    return;
+  }
+  if (e.target.closest('[data-next]') || e.target.closest('[data-skip]')) { nextQuestion(); renderQuiz(); return; }
+  if (e.target.closest('[data-qplay]')) speak(T(quiz.cur.ans).text);
+});
+document.getElementById('chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-cat]'); if (!b) return;
+  st.cat = b.dataset.cat; save(); renderChips(); renderList(); window.scrollTo(0, 0);
+});
+qIn.addEventListener('input', () => { renderChips(); renderList(); window.scrollTo(0, 0); });
+qIn.addEventListener('keydown', e => { if (e.key === 'Enter') qIn.blur(); });
+document.getElementById('clearQ').onclick = () => { qIn.value = ''; renderChips(); renderList(); qIn.focus(); };
+document.querySelectorAll('.speed button').forEach(b => {
+  b.classList.toggle('on', +b.dataset.rate === st.rate);
+  b.onclick = () => { st.rate = +b.dataset.rate; save(); document.querySelectorAll('.speed button').forEach(x => x.classList.toggle('on', x === b)); };
+});
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
+const langSel = document.getElementById('lang');
+langSel.value = st.lang;
+langSel.addEventListener('change', () => {
+  st.lang = langSel.value; save(); pickVoice();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  if (quiz.cur) quiz.cur.picked = null;
+  renderChips(); render(); window.scrollTo(0, 0);
+  toast(`${LANGS[st.lang].label}로 바꿨어요`);
+});
+
+renderChips();
+render();
+</script>
+<script>
+// ───────── 앱 설치 ─────────
+// 1) 카카오톡 안에서 열면 바로 바깥 브라우저(Chrome·Safari)로 넘긴다. 카톡 브라우저는 앱 설치를 못 하기 때문.
+// 2) Chrome·삼성 인터넷: 설치 가능해지면 [설치] 버튼 한 번으로 설치 창을 띄운다.
+// 3) 아이폰 Safari: 공유 → 홈 화면에 추가 방법을 알려 준다.
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+(() => {
+  const bar = document.getElementById('inst'), msg = document.getElementById('instMsg');
+  const go = document.getElementById('instGo'), x = document.getElementById('instX');
+  const ua = navigator.userAgent;
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  const kakao = /KAKAOTALK/i.test(ua), android = /Android/i.test(ua);
+  const ios = /iP(hone|ad|od)/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const inApp = kakao || /NAVER|Instagram|FBAN|FBAV|Line\//i.test(ua);
+  const DISMISS = 'travel-install-dismissed';
+  let deferred = null;
+  const show = (text, label, onGo) => {
+    msg.innerHTML = text; go.hidden = !label; go.textContent = label || ''; go.onclick = onGo || null; bar.hidden = false;
+  };
+  const dismissed = () => { try { return localStorage.getItem(DISMISS) === '1'; } catch (e) { return false; } };
+  x.onclick = () => { bar.hidden = true; try { localStorage.setItem(DISMISS, '1'); } catch (e) {} };
+  if (standalone) return;
+
+  const openOutside = () => {
+    const url = location.href.split('#')[0];
+    if (kakao) location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url);
+    else if (android) location.href = `intent://${location.host}${location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+  };
+  if (inApp) {
+    show(ios ? '📲 앱으로 설치하려면 <b>Safari</b>에서 열어야 해요.' : '📲 앱으로 설치하려면 <b>Chrome</b>에서 열어야 해요.',
+         ios ? 'Safari로 열기' : 'Chrome으로 열기', openOutside);
+    // 카카오톡이면 처음 한 번은 자동으로 바깥 브라우저로 넘긴다
+    if (kakao && !sessionStorage.getItem('kakaoJump')) { try { sessionStorage.setItem('kakaoJump', '1'); } catch (e) {} setTimeout(openOutside, 300); }
+    return;
+  }
+  addEventListener('beforeinstallprompt', e => {
+    e.preventDefault(); deferred = e;
+    if (dismissed()) return;
+    show('📲 홈 화면에 <b>앱으로 설치</b>하면 인터넷 없이도 쓸 수 있어요.', '설치', async () => {
+      deferred.prompt();
+      const r = await deferred.userChoice.catch(() => ({}));
+      deferred = null; bar.hidden = true;
+      if (r.outcome === 'accepted') toast('설치했어요. 홈 화면의 여행회화 아이콘으로 여세요.');
+    });
+  });
+  addEventListener('appinstalled', () => { bar.hidden = true; });
+  if (ios && !dismissed()) show('📲 아래 <b>공유 버튼</b>(네모 위 화살표) → <b>홈 화면에 추가</b>를 누르면 앱처럼 쓸 수 있어요.');
+})();
+</script>
+</body>
+</html>
