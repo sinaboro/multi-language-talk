@@ -113,7 +113,7 @@
   .qscope button.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:700}
 
   .tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
-        display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
+        display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
   .tabs button{border:0;background:none;height:var(--tabbar);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:600;color:var(--muted)}
   .tabs svg{width:22px;height:22px}
   .tabs button.on{color:var(--accent)}
@@ -132,6 +132,25 @@
     .lang svg{right:8px}
     .speed button{padding:5px 7px}
   }
+  /* 크게 보기: 현지 사람에게 화면을 보여 줄 때 */
+  .bigview{position:fixed;inset:0;z-index:20;background:var(--surface);display:flex;flex-direction:column;
+           padding:calc(16px + env(safe-area-inset-top,0px)) 20px calc(16px + env(safe-area-inset-bottom,0px))}
+  .bigview .bt{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;overflow:auto;text-align:center}
+  .bigview .bn{font:600 clamp(30px,9vw,64px)/1.25 var(--en);overflow-wrap:anywhere}
+  .bigview .bp{font-size:clamp(16px,4.5vw,24px);color:var(--accent)}
+  .bigview .bk{font-size:clamp(15px,4vw,20px);color:var(--muted)}
+  .bigview .bb{display:flex;gap:10px}
+  .bigview .bb button{flex:1;height:56px;border-radius:14px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:16px}
+  .bigview .bb .play{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  /* 사용법 탭 */
+  .help{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;line-height:1.65}
+  .help h3{margin:0 0 6px;font-size:15.5px;color:var(--accent)}
+  .help p,.help ul,.help ol{margin:0;font-size:14px}
+  .help ul,.help ol{padding-left:20px}
+  .help li+li{margin-top:3px}
+  .help .ico{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--on-accent);vertical-align:-5px}
+  .help .ico svg{width:13px;height:13px}
+  .help .ico.line{background:var(--bg);color:var(--fg);border:1px solid var(--line)}
   @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
 </head>
@@ -172,9 +191,14 @@
 <nav class="tabs">
   <button data-tab="list" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg>표현</button>
   <button data-tab="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>즐겨찾기</button>
-  <button data-tab="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg>퀴즈</button>
+  <button data-tab="quiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4h6l1 3H8z"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 13l2 2 4-4"/></svg>퀴즈</button>
+  <button data-tab="help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg>사용법</button>
 </nav>
 <div class="toast" id="toast" hidden></div>
+<div class="bigview" id="bigview" hidden role="dialog" aria-label="크게 보기">
+  <div class="bt"><div class="bn" id="bvN"></div><div class="bp" id="bvP"></div><div class="bk" id="bvK"></div></div>
+  <div class="bb"><button class="play" id="bvPlay">🔊 들려주기</button><button id="bvClose">닫기</button></div>
+</div>
 
 <script>
 const CATS = [
@@ -242,7 +266,7 @@ food|Can I get this to go?|캔 아이 겟 디스 투 고?|포장해 주세요.|�
 food|For here, please.|포 히어, 플리즈|여기서 먹을게요.|
 food|Check, please.|첵, 플리즈|계산서 주세요.|영국에서는 The bill, please.(더 빌, 플리즈)라고 해요.
 food|Can we pay separately?|캔 위 페이 세퍼럿리?|따로 계산해도 될까요?|
-food|Is service included?|이즈 써비스 인클루디드?|봉사료 포함인가요?|미국은 팁 15~20%가 보통이에요.
+food|Is service included?|이즈 써비스 인클루디드?|봉사료 포함인가요?|미국은 보통 팁 18~20%를 따로 내요. 계산서에 service charge가 있으면 이미 포함된 거예요.
 food|An iced Americano, please.|언 아이스드 아메리카노, 플리즈|아이스 아메리카노 하나 주세요.|
 food|This isn't what I ordered.|디스 이즌트 왓 아이 오더드|이건 제가 주문한 게 아니에요.|
 food|Could I have some more water?|쿠드 아이 해브 썸 모어 워러?|물 좀 더 주시겠어요?|
@@ -430,7 +454,7 @@ zh:`你好。|니 하오|nǐ hǎo
 能帮我一下吗？|넝 빵 워 이샤 마?|néng bāng wǒ yíxià ma?
 多少钱？|둬샤오 첸?|duōshao qián?
 洗手间在哪儿？|시서우졘 짜이 날?|xǐshǒujiān zài nǎr?
-能写下来吗？|넝 셰 샤라이 마?|néng xiě xiàlái ma?
+能写下来吗？|넝 셰 샤라이 마?|néng xiě xiàlai ma?
 这是我的护照。|저 스 워더 후자오|zhè shì wǒ de hùzhào
 我是来旅游的。|워 스 라이 뤼유 더|wǒ shì lái lǚyóu de
 我待五天。|워 다이 우 톈|wǒ dāi wǔ tiān
@@ -575,7 +599,7 @@ Qual è la password del Wi-Fi?|콸 에 라 패스워드 델 와이파이?
 Posso lasciare qui i bagagli?|포소 라샤레 퀴 이 바갈리?
 L'aria condizionata non funziona.|라리아 콘디치오나타 논 푼치오나
 Non c'è acqua calda.|논 체 아쿠아 칼다
-Sono rimasto chiuso fuori.|소노 리마스토 키우조 푸오리
+Sono rimasto(a) chiuso(a) fuori.|소노 리마스토(타) 키우조(자) 푸오리
 Posso avere altri asciugamani?|포소 아베레 알트리 아슈가마니?
 Posso fare il check-out più tardi?|포소 파레 일 체크아웃 퓨 타르디?
 Mi può chiamare un taxi?|미 푸오 키아마레 운 탁시?
@@ -583,7 +607,7 @@ Un tavolo per due, per favore.|운 타볼로 페르 두에, 페르 파보레
 Posso vedere il menù?|포소 베데레 일 메누?
 Cosa mi consiglia?|코자 미 콘실리아?
 Prendo questo, per favore.|프렌도 퀘스토, 페르 파보레
-Sono allergico alle arachidi.|소노 알레르지코 알레 아라키디
+Sono allergico(a) alle arachidi.|소노 알레르지코(카) 알레 아라키디
 Senza ghiaccio, per favore.|센차 갸초, 페르 파보레
 Non troppo piccante, per favore.|논 트로포 피칸테, 페르 파보레
 Da portare via, per favore.|다 포르타레 비아, 페르 파보레
@@ -620,7 +644,7 @@ Ho perso il treno.|오 페르소 일 트레노
 Come arrivo al museo?|코메 아리보 알 무제오?
 È lontano da qui?|에 론타노 다 퀴?
 Ci posso andare a piedi?|치 포소 안다레 아 피에디?
-Mi sono perso.|미 소노 페르소
+Mi sono perso(a).|미 소노 페르소(사)
 Dove siamo su questa mappa?|도베 시아모 수 퀘스타 마파?
 C'è una stazione della metro qui vicino?|체 우나 스타치오네 델라 메트로 퀴 비치노?
 Giri a sinistra. / Giri a destra. / Sempre dritto.|지리 아 시니스트라 / 지리 아 데스트라 / 셈프레 드리토
@@ -867,6 +891,7 @@ function hilite(text, q) {
 
 // ───────── 카드 ─────────
 const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>';
+const ICON_BIG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
 const ICON_STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>';
 function card(p, q = '', showCat = false) {
   const t = T(p);
@@ -882,6 +907,7 @@ function card(p, q = '', showCat = false) {
     <div class="acts">
       <button class="ib play" data-play aria-label="발음 듣기">${ICON_PLAY}</button>
       <button class="ib fav ${isFav(p.id) ? 'on' : ''}" data-fav aria-label="즐겨찾기" aria-pressed="${isFav(p.id)}">${ICON_STAR}</button>
+      <button class="ib" data-big aria-label="크게 보기">${ICON_BIG}</button>
     </div></article>`;
 }
 
@@ -970,11 +996,65 @@ function renderQuiz() {
       : `<button class="btn" data-qplay>다시 듣기</button><button class="btn primary" data-next>다음 문제</button>`}</div></div>`;
 }
 
+// 사용법 탭: 앱의 기능과 여행 전 준비를 한 화면에 정리
+function renderHelp() {
+  const sec = (t, body) => `<section class="help"><h3>${t}</h3>${body}</section>`;
+  const ico = (svg, line) => `<span class="ico ${line ? 'line' : ''}">${svg}</span>`;
+  const installed = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  view.innerHTML = [
+    sec('📖 이렇게 써요', `<ol>
+      <li>위쪽에서 <b>언어</b>를 고릅니다. (영어·일본어·중국어·이탈리아어·프랑스어)</li>
+      <li><b>상황 칩</b>(공항·호텔·식당…)을 누르거나 <b>검색</b>으로 문장을 찾습니다.</li>
+      <li>카드를 누르면 원어민 발음으로 읽어 줍니다. 따라 말해 보세요.</li></ol>`),
+    sec('🃏 카드 버튼', `<ul>
+      <li>${ico(ICON_PLAY)} <b>발음 듣기</b> — 카드 아무 곳이나 눌러도 됩니다.</li>
+      <li>${ico(ICON_STAR, 1)} <b>즐겨찾기</b> — 여행에서 꼭 쓸 문장을 모아 두세요.</li>
+      <li>${ico(ICON_BIG, 1)} <b>크게 보기</b> — 글자를 화면 가득 크게 보여 줍니다. 말이 안 통할 때 <b>현지 사람에게 화면을 보여 주세요.</b></li></ul>`),
+    sec('🔎 검색 요령', `<ul>
+      <li>한국어로: <b>화장실</b>, <b>체크인</b>, <b>얼마</b>, <b>잃어버렸어요</b></li>
+      <li>그 나라 말로: toilet, トイレ, 洗手间, bagno, toilettes</li>
+      <li>중국어는 성조 없이 병음으로도 찾을 수 있어요: <b>xishoujian</b></li>
+      <li>상황 칩을 고른 채 검색하면 그 상황 안에서만 찾습니다.</li></ul>`),
+    sec('🐢 속도 · ⭐ 즐겨찾기 · 📝 퀴즈', `<ul>
+      <li>위쪽 <b>천천히</b>를 누르면 느리게 읽어 줍니다.</li>
+      <li><b>즐겨찾기</b> 탭에 별 표시한 문장만 모입니다.</li>
+      <li><b>퀴즈</b> 탭: 한국어 뜻을 보고 알맞은 문장을 고릅니다. 위쪽에서 전체·즐겨찾기·상황별로 범위를 고를 수 있어요.</li>
+      <li>프랑스어 <b>(e)</b>, 이탈리아어 <b>(a)</b>는 말하는 사람이 여자일 때 바뀌는 끝소리예요.</li></ul>`),
+    sec('✈️ 출국 전에 꼭 해 두세요', `<p>발음 듣기는 폰의 <b>음성 엔진</b>을 씁니다. 그 나라 말 음성이 폰에 없으면 소리가 안 나요.</p><ul>
+      <li><b>갤럭시</b>: 설정 → 일반 → 텍스트 음성 변환 → 엔진 옆 ⚙ → <b>음성 데이터 설치</b> → 필요한 언어 받기</li>
+      <li><b>아이폰</b>: 설정 → 손쉬운 사용 → 읽기 및 말하기 → 음성 → 언어 받기. 소리가 안 나면 무음 모드를 끄세요.</li>
+      <li>음성을 받아 두면 <b>인터넷 없이도</b> 발음을 들을 수 있어요.</li></ul>`),
+    sec('📲 앱으로 설치 · 오프라인', `<ul>
+      <li>${installed ? '✅ 지금 <b>앱으로 실행 중</b>이에요.' : 'Chrome: 위쪽 <b>[설치]</b> 안내 또는 <b>⋮ → 앱 설치</b> · 아이폰 Safari: <b>공유 → 홈 화면에 추가</b>'}</li>
+      <li>설치 후 인터넷이 될 때 <b>한 번 열어 두면</b> 비행기 모드에서도 열립니다.</li>
+      <li>새 문장이 추가되면 인터넷이 될 때 앱을 열면 <b>자동으로 업데이트</b>됩니다.</li>
+      <li>즐겨찾기·퀴즈 기록은 이 폰에만 저장되고, 업데이트해도 그대로 남아요.</li></ul>`),
+    `<p class="count" style="text-align:center">문장 ${P.length}개 · 언어 ${Object.keys(LANGS).length}개 · <a href="https://github.com/sinaboro/multi-language-talk" style="color:inherit">자세한 안내</a></p>`,
+  ].join('');
+}
+
+// 크게 보기: 문장을 화면 가득 보여 준다. 폰의 뒤로 가기 버튼으로도 닫힌다.
+const bv = document.getElementById('bigview');
+let bvItem = null;
+function openBig(p) {
+  bvItem = p; const t = T(p);
+  const n = document.getElementById('bvN');
+  n.textContent = t.text; n.lang = st.lang;
+  document.getElementById('bvP').textContent = t.rom ? `${t.rom} · ${t.pr}` : t.pr;
+  document.getElementById('bvK').textContent = p.ko;
+  bv.hidden = false;
+  history.pushState({ big: 1 }, '');
+}
+function closeBig() { bv.hidden = true; bvItem = null; }
+document.getElementById('bvPlay').onclick = () => bvItem && speak(T(bvItem).text);
+document.getElementById('bvClose').onclick = () => history.back();
+addEventListener('popstate', closeBig);
+
 function render() {
   document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
   document.getElementById('searchWrap').hidden = tab !== 'list';
   document.getElementById('chips').hidden = tab !== 'list';
-  if (tab === 'list') renderList(); else if (tab === 'fav') renderFav(); else renderQuiz();
+  if (tab === 'list') renderList(); else if (tab === 'fav') renderFav(); else if (tab === 'help') renderHelp(); else renderQuiz();
 }
 
 // ───────── 이벤트 ─────────
@@ -982,7 +1062,8 @@ view.addEventListener('click', e => {
   const c = e.target.closest('.card');
   if (c) {
     const p = P[+c.dataset.id];
-    const playBtn = e.target.closest('[data-play]'), favBtn = e.target.closest('[data-fav]');
+    const favBtn = e.target.closest('[data-fav]');
+    if (e.target.closest('[data-big]')) { openBig(p); return; }
     if (favBtn) {
       st.favs = isFav(p.id) ? st.favs.filter(x => x !== p.key) : [...st.favs, p.key]; save();
       favBtn.classList.toggle('on', isFav(p.id)); favBtn.setAttribute('aria-pressed', isFav(p.id));
@@ -1030,6 +1111,8 @@ langSel.addEventListener('change', () => {
   toast(`${LANGS[st.lang].label}로 바꿨어요`);
 });
 
+// 처음 실행이면 사용법부터 보여 준다
+try { if (!localStorage.getItem('travel-help-seen')) { tab = 'help'; localStorage.setItem('travel-help-seen', '1'); } } catch (e) {}
 renderChips();
 render();
 </script>

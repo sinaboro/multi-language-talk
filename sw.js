@@ -1,6 +1,6 @@
 // 서비스 워커: 앱 파일을 폰에 저장해 두고 인터넷 없이도 실행되게 한다.
 // 앱 내용을 고치면 VERSION 숫자를 올려야 폰에서 새 버전을 받는다.
-const VERSION = 'travel-talk-v2';
+const VERSION = 'travel-talk-v3';
 const FONTS = 'travel-talk-fonts';
 const FILES = ['./', 'index.html', 'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
