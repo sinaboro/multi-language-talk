@@ -5,6 +5,7 @@ index.html의 문장 데이터를 검사한다. 문장을 추가·수정한 뒤�
   - 영어(RAW)와 다른 언어(LANG_RAW)의 줄 수가 같은지 (순서가 어긋나면 뜻이 엉뚱하게 붙음)
   - 줄마다 칸 수가 맞는지 (영어 5칸, 일본어·이탈리아어·프랑스어 2칸, 중국어 3칸)
   - 상황 이름이 CATS에 있는지, 같은 문장이 두 번 들어가지 않았는지
+    (영어 문장은 즐겨찾기 저장 열쇠라서 겹치면 오류)
 
 사용법 (저장소 맨 위 폴더에서):
     python tools/check_data.py           # 검사
@@ -52,9 +53,10 @@ def check(cats, en, langs):
         dup = [t for t, c in collections.Counter(l.split('|')[0] for l in lines).items() if c > 1]
         if dup:
             notes.append(f'{lg}: 같은 문장이 두 번 → {dup}')
+    # 영어 문장은 즐겨찾기 저장 열쇠라서 겹치면 안 된다
     dup = [t for t, c in collections.Counter(l.split('|')[1] for l in en if '|' in l).items() if c > 1]
     if dup:
-        notes.append(f'영어: 같은 문장이 두 번 → {dup}')
+        errors.append(f'영어: 같은 문장이 두 번 (즐겨찾기 열쇠가 겹침) → {dup}')
     return errors, notes
 
 

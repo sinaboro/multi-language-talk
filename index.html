@@ -774,7 +774,8 @@ const LANGS = {
 const CATNAME = Object.fromEntries(CATS);
 const P = RAW.trim().split('\n').map((l, i) => {
   const [cat, en, pr, ko, tip] = l.split('|');
-  return { id: i, cat, ko, t: { en: { text: en, pr, tip: tip || '' } } };
+  // key: 즐겨찾기 저장용 열쇠 = 영어 문장. 줄 순서가 바뀌거나 중간에 문장이 들어가도 즐겨찾기가 밀리지 않는다.
+  return { id: i, key: en, cat, ko, t: { en: { text: en, pr, tip: tip || '' } } };
 });
 for (const [lg, raw] of Object.entries(LANG_RAW)) {
   raw.trim().split('\n').forEach((l, i) => {
@@ -789,7 +790,14 @@ let st = { favs: [], rate: 0.9, cat: 'all', best: 0, lang: 'en' };
 try { Object.assign(st, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
 if (!LANGS[st.lang]) st.lang = 'en';
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
-const isFav = id => st.favs.includes(id);
+// 예전(v1)에는 즐겨찾기를 줄 번호(0,1,2…)로 저장했다 → 영어 문장 열쇠로 바꿔 둔다.
+// v1 때 문장 순서는 지금과 같아서 번호가 그대로 맞는다. 없어진 문장의 열쇠는 버린다.
+{
+  const keys = new Set(P.map(p => p.key));
+  const fixed = [...new Set(st.favs.map(x => typeof x === 'number' ? P[x]?.key : x))].filter(k => keys.has(k));
+  if (fixed.length !== st.favs.length || fixed.some((k, i) => k !== st.favs[i])) { st.favs = fixed; save(); }
+}
+const isFav = id => st.favs.includes(P[id].key);
 const T = p => p.t[st.lang];
 
 // ───────── 소리 ─────────
@@ -976,7 +984,7 @@ view.addEventListener('click', e => {
     const p = P[+c.dataset.id];
     const playBtn = e.target.closest('[data-play]'), favBtn = e.target.closest('[data-fav]');
     if (favBtn) {
-      st.favs = isFav(p.id) ? st.favs.filter(x => x !== p.id) : [...st.favs, p.id]; save();
+      st.favs = isFav(p.id) ? st.favs.filter(x => x !== p.key) : [...st.favs, p.key]; save();
       favBtn.classList.toggle('on', isFav(p.id)); favBtn.setAttribute('aria-pressed', isFav(p.id));
       toast(isFav(p.id) ? '즐겨찾기에 담았어요' : '즐겨찾기에서 뺐어요');
       if (tab === 'fav') renderFav();
